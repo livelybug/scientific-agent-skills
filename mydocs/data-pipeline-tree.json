@@ -1,0 +1,64 @@
+{
+  "summary": {
+    "stage_count": 1,
+    "sub_stage_count": 5,
+    "skill_count": 37,
+    "data_options_estimate": "180+"
+  },
+  "stage_0 数据获取与接入 (Data Acquisition)": {
+    "summary": {
+    "sub_stage_count": 5,
+    "skill_count": 37,
+    "data_options_estimate": "180+"
+    },
+    "sub_stage": {
+    "0.1 公共数据库查询": {
+      "database-lookup": "78个公共数据库统一REST入口(PubChem/ChEMBL/UniProt/ClinVar/COSMIC/ClinicalTrials.gov/FRED/USPTO…),含分页、限流、溯源",
+      "bioservices": "40+生物信息服务(KEGG/UniProt/ChEBI/Reactome/IntAct…)",
+      "gget": "20+组学数据库一行命令查询(Ensembl/UniProt/BLAST/CELLxGENE…)",
+      "biopython": "Entrez编程接口访问PubMed/GenBank/BLAST/分类/PDB/Phylo",
+      "benchling-integration": "LIMS(DNA/蛋白registry + 库存 + ELN + 任务)"
+    },
+    "0.2 文献检索": {
+      "paper-lookup": "10个学术库检索(PubMed/bioRxiv/arXiv/OpenAlex…)",
+      "bgpt-paper-search": "全文25+字段结构化抽取(方法/结果/样本量)",
+      "paperzilla": "项目-论文匹配/推荐/分类",
+      "exa-search": "高质量网页搜索 + URL内容提取",
+      "research-lookup": "60条去重学术证据 + 证据矩阵 + 共识/冲突综合",
+      "parallel-web": "高质量网页搜索 + URL内容提取",
+      "literature-review": "PRISMA系统综述 + 多引文样式"
+    },
+    "0.3 专项数据平台": {
+      "depmap": "癌症细胞系CRISPR Chronos依赖性 + 药敏数据",
+      "primekg": "精准医学知识图谱(基因-药物-疾病-表型)",
+      "imaging-data-commons": "NCI 影像数据(CT/MR/PET/病理)下载",
+      "usfiscaldata": "美国财政部54数据集/179表(国债、TGA、拍卖、CPI…)",
+      "hugging-science": "17个科学领域HF数据集/模型/Spaces目录",
+      "cellxgene-census": "CZ CELLxGENE Census 程序化查询(2025-11-08 LTS,217M+ 细胞 / 1845 数据集,人/鼠/猕猴/黑猩猩等),支持 cell metadata、gene expression 切片、summary counts、H5AD URI/下载、embeddings、空间数据、参考图谱跨物种/组织/疾病/assay/细胞类型比较",
+      "onekgpd": "1000 Genomes Project 个体级查询(3202 WGS 个体,GRCh38):变异/样本选择与计数、hom-ref 位置、个体间亲缘关系(双/1/2/3 级 + KING 系数),过滤支持 1kG AF / gnomAD v4.1 exome+genome AF / AlphaMissense / ClinVar / VEP",
+      "tamarind": "Tamarind Bio 云平台(无需本地 GPU,REST API + MCP):AlphaFold/Boltz-2/Chai-1/ESMFold2 结构预测,RFdiffusion/ProteinMPNN/BoltzGen 蛋白/抗体/纳米体/结合剂设计,DiffDock/Autodock Vina 对接,结合亲和力,MSA 生成,分子动力学,支持批量提交",
+      "tiledbvcf": "TileDB-VCF 稀疏数组 + VCF/BCF 高性能存储/检索:可扩展摄入、增量样本添加(无需合并)、压缩存储、本地/云端(S3/Azure/GCS)并行区域查询、子集导出,适用于 <1000 样本的群体基因组学"
+    },
+    "0.4 领域数据格式加载": {
+      "pydicom": "DICOM读/写/匿名化/窗位/3D重建",
+      "bids": "神经影像BIDS标准(DICOM→BIDS + PyBIDS查询)",
+      "histolab": "全幅病理切片(SVS/TIFF/NDPI)组织检测+tile抽取",
+      "flowio": "流式FCS文件(2.0/3.0/3.1)→DataFrame",
+      "pacsomatic": "nf-core/pacsomatic肿瘤-正常体细胞变异调用"
+    },
+    "0.5 云平台/实验室数据管理": {
+      "dnanexus-integration": "基因组云平台(FASTQ/BAM/VCF处理 + 流水线)",
+      "latchbio-integration": "生信serverless工作流(Nextflow + Registry)",
+      "labarchive-integration": "ELN REST API(条目/附件 + OAuth)",
+      "omero-integration": "显微镜数据(ROI/批处理/OMERO.tables)",
+      "ginkgo-cloud-lab": "蛋白表达/纯化/IVT/SPR/DoE云实验",
+      "protocolsio-integration": "协议发布(DOI) + 协作 + 物料管理",
+      "opentrons-integration": "Opentrons Python Protocol API v2",
+      "pylabrobot": "跨硬件实验室SDK(Hamilton/Opentrons/Tecan + 读板机)",
+      "open-notebook": "自托管NotebookLM(PDF/音/视频 + 16+AI提供商)",
+      "lamindb": "生物学lakehouse(沿袭追踪 + schema验证 + FAIR)",
+      "pyzotero": "Zotero API v3(Web库/群组/本地 + BibTeX/CSL-JSON)"
+    }
+    }
+  }
+}
