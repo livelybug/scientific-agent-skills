@@ -1,64 +1,238 @@
 {
   "summary": {
-    "stage_count": 1,
-    "sub_stage_count": 5,
-    "skill_count": 37,
-    "data_options_estimate": "180+"
+    "stage_count": 2,
+    "sub_stage_count": 6,
+    "skill_count": 71,
+    "data_options_estimate": "380+"
   },
-  "stage_0 数据获取与接入 (Data Acquisition)": {
+  "stage_0": {
+    "name": "数据获取与接入 (Data Acquisition)",
     "summary": {
-    "sub_stage_count": 5,
-    "skill_count": 37,
-    "data_options_estimate": "180+"
+      "sub_stage_count": 4,
+      "skill_count": 37,
+      "data_options_estimate": "180+"
     },
     "sub_stage": {
-    "0.1 公共数据库查询": {
-      "database-lookup": "78个公共数据库统一REST入口(PubChem/ChEMBL/UniProt/ClinVar/COSMIC/ClinicalTrials.gov/FRED/USPTO…),含分页、限流、溯源",
-      "bioservices": "40+生物信息服务(KEGG/UniProt/ChEBI/Reactome/IntAct…)",
-      "gget": "20+组学数据库一行命令查询(Ensembl/UniProt/BLAST/CELLxGENE…)",
-      "biopython": "Entrez编程接口访问PubMed/GenBank/BLAST/分类/PDB/Phylo",
-      "benchling-integration": "LIMS(DNA/蛋白registry + 库存 + ELN + 任务)"
-    },
-    "0.2 文献检索": {
-      "paper-lookup": "10个学术库检索(PubMed/bioRxiv/arXiv/OpenAlex…)",
-      "bgpt-paper-search": "全文25+字段结构化抽取(方法/结果/样本量)",
-      "paperzilla": "项目-论文匹配/推荐/分类",
-      "exa-search": "高质量网页搜索 + URL内容提取",
-      "research-lookup": "60条去重学术证据 + 证据矩阵 + 共识/冲突综合",
-      "parallel-web": "高质量网页搜索 + URL内容提取",
-      "literature-review": "PRISMA系统综述 + 多引文样式"
-    },
-    "0.3 专项数据平台": {
-      "depmap": "癌症细胞系CRISPR Chronos依赖性 + 药敏数据",
-      "primekg": "精准医学知识图谱(基因-药物-疾病-表型)",
-      "imaging-data-commons": "NCI 影像数据(CT/MR/PET/病理)下载",
-      "usfiscaldata": "美国财政部54数据集/179表(国债、TGA、拍卖、CPI…)",
-      "hugging-science": "17个科学领域HF数据集/模型/Spaces目录",
-      "cellxgene-census": "CZ CELLxGENE Census 程序化查询(2025-11-08 LTS,217M+ 细胞 / 1845 数据集,人/鼠/猕猴/黑猩猩等),支持 cell metadata、gene expression 切片、summary counts、H5AD URI/下载、embeddings、空间数据、参考图谱跨物种/组织/疾病/assay/细胞类型比较",
-      "onekgpd": "1000 Genomes Project 个体级查询(3202 WGS 个体,GRCh38):变异/样本选择与计数、hom-ref 位置、个体间亲缘关系(双/1/2/3 级 + KING 系数),过滤支持 1kG AF / gnomAD v4.1 exome+genome AF / AlphaMissense / ClinVar / VEP",
-      "tamarind": "Tamarind Bio 云平台(无需本地 GPU,REST API + MCP):AlphaFold/Boltz-2/Chai-1/ESMFold2 结构预测,RFdiffusion/ProteinMPNN/BoltzGen 蛋白/抗体/纳米体/结合剂设计,DiffDock/Autodock Vina 对接,结合亲和力,MSA 生成,分子动力学,支持批量提交",
-      "tiledbvcf": "TileDB-VCF 稀疏数组 + VCF/BCF 高性能存储/检索:可扩展摄入、增量样本添加(无需合并)、压缩存储、本地/云端(S3/Azure/GCS)并行区域查询、子集导出,适用于 <1000 样本的群体基因组学"
-    },
-    "0.4 领域数据格式加载": {
-      "pydicom": "DICOM读/写/匿名化/窗位/3D重建",
-      "bids": "神经影像BIDS标准(DICOM→BIDS + PyBIDS查询)",
-      "histolab": "全幅病理切片(SVS/TIFF/NDPI)组织检测+tile抽取",
-      "flowio": "流式FCS文件(2.0/3.0/3.1)→DataFrame",
-      "pacsomatic": "nf-core/pacsomatic肿瘤-正常体细胞变异调用"
-    },
-    "0.5 云平台/实验室数据管理": {
-      "dnanexus-integration": "基因组云平台(FASTQ/BAM/VCF处理 + 流水线)",
-      "latchbio-integration": "生信serverless工作流(Nextflow + Registry)",
-      "labarchive-integration": "ELN REST API(条目/附件 + OAuth)",
-      "omero-integration": "显微镜数据(ROI/批处理/OMERO.tables)",
-      "ginkgo-cloud-lab": "蛋白表达/纯化/IVT/SPR/DoE云实验",
-      "protocolsio-integration": "协议发布(DOI) + 协作 + 物料管理",
-      "opentrons-integration": "Opentrons Python Protocol API v2",
-      "pylabrobot": "跨硬件实验室SDK(Hamilton/Opentrons/Tecan + 读板机)",
-      "open-notebook": "自托管NotebookLM(PDF/音/视频 + 16+AI提供商)",
-      "lamindb": "生物学lakehouse(沿袭追踪 + schema验证 + FAIR)",
-      "pyzotero": "Zotero API v3(Web库/群组/本地 + BibTeX/CSL-JSON)"
+      "0.1 通用数据平台查询": {
+        "database-lookup": "78个公共数据库统一REST入口(PubChem/ChEMBL/UniProt/ClinVar/COSMIC/ClinicalTrials.gov/FRED/USPTO…),含分页、限流、溯源",
+        "bioservices": "40+生物信息服务(KEGG/UniProt/ChEBI/Reactome/IntAct…)",
+        "gget": "20+组学数据库一行命令查询(Ensembl/UniProt/BLAST/CELLxGENE…)",
+        "biopython": "Entrez编程接口访问PubMed/GenBank/BLAST/分类/PDB/Phylo",
+        "hugging-science": "17个科学领域HF数据集/模型/Spaces目录",
+        "pylabrobot": "跨硬件实验室SDK(Hamilton/Opentrons/Tecan + 读板机)",
+        "open-notebook": "自托管NotebookLM(PDF/音/视频 + 16+AI提供商)"
+      },
+      "0.2 专用数据平台查询": {
+        "benchling-integration": "LIMS(DNA/蛋白registry + 库存 + ELN + 任务)",
+        "depmap": "癌症细胞系CRISPR Chronos依赖性 + 药敏数据",
+        "primekg": "精准医学知识图谱(基因-药物-疾病-表型)",
+        "imaging-data-commons": "NCI 影像数据(CT/MR/PET/病理)下载",
+        "usfiscaldata": "美国财政部54数据集/179表(国债、TGA、拍卖、CPI…)",
+        "cellxgene-census": "CZ CELLxGENE Census 程序化查询(2025-11-08 LTS,217M+ 细胞 / 1845 数据集,人/鼠/猕猴/黑猩猩等),支持 cell metadata、gene expression 切片、summary counts、H5AD URI/下载、embeddings、空间数据、参考图谱跨物种/组织/疾病/assay/细胞类型比较",
+        "onekgpd": "1000 Genomes Project 个体级查询(3202 WGS 个体,GRCh38):变异/样本选择与计数、hom-ref 位置、个体间亲缘关系(双/1/2/3 级 + KING 系数),过滤支持 1kG AF / gnomAD v4.1 exome+genome AF / AlphaMissense / ClinVar / VEP",
+        "tamarind": "Tamarind Bio 云平台(无需本地 GPU,REST API + MCP):AlphaFold/Boltz-2/Chai-1/ESMFold2 结构预测,RFdiffusion/ProteinMPNN/BoltzGen 蛋白/抗体/纳米体/结合剂设计,DiffDock/Autodock Vina 对接,结合亲和力,MSA 生成,分子动力学,支持批量提交",
+        "tiledbvcf": "TileDB-VCF 稀疏数组 + VCF/BCF 高性能存储/检索:可扩展摄入、增量样本添加(无需合并)、压缩存储、本地/云端(S3/Azure/GCS)并行区域查询、子集导出,适用于 <1000 样本的群体基因组学",
+        "dnanexus-integration": "基因组云平台(FASTQ/BAM/VCF处理 + 流水线)",
+        "latchbio-integration": "生信serverless工作流(Nextflow + Registry)",
+        "labarchive-integration": "ELN REST API(条目/附件 + OAuth)",
+        "omero-integration": "显微镜数据(ROI/批处理/OMERO.tables)",
+        "ginkgo-cloud-lab": "蛋白表达/纯化/IVT/SPR/DoE云实验",
+        "protocolsio-integration": "协议发布(DOI) + 协作 + 物料管理",
+        "opentrons-integration": "Opentrons Python Protocol API v2",
+        "lamindb": "生物学lakehouse(沿袭追踪 + schema验证 + FAIR)",
+        "pyzotero": "Zotero API v3(Web库/群组/本地 + BibTeX/CSL-JSON)"
+      },
+      "0.3 文献检索": {
+        "paper-lookup": "10个学术库检索(PubMed/bioRxiv/arXiv/OpenAlex…)",
+        "bgpt-paper-search": "全文25+字段结构化抽取(方法/结果/样本量)",
+        "paperzilla": "项目-论文匹配/推荐/分类",
+        "exa-search": "高质量网页搜索 + URL内容提取",
+        "research-lookup": "60条去重学术证据 + 证据矩阵 + 共识/冲突综合",
+        "parallel-web": "高质量网页搜索 + URL内容提取",
+        "literature-review": "PRISMA系统综述 + 多引文样式"
+      }
     }
+  },
+  "stage_1": {
+    "name": "数据清洗与预处理 (Data Cleaning)",
+    "summary": {
+      "sub_stage_count": 2,
+      "skill_count": 34,
+      "data_options_estimate": "200+"
+    },
+    "sub_stage": {
+      "1.1 文件格式识别": {
+        "_meta": "顶层 skill 入口 + capability 注册 + tier 判定 + 6 大类 reference 路由；不直接加载文件，只识别分类并给出 tier",
+        "exploratory-data-analysis": "v2.61.0 顶层 skill:有界本地 EDA + 6 大类格式识别 + 缺失/分布审计 + 报告脚手架;automated 9 个格式走 eda_analyzer.py,其余 reference-only,未知 fail closed;输入必须在 --root 内,默认 64 MiB/最大 512 MiB,严格 JSON/Markdown 输出",
+        "capability_manifest.py": "list(机器可读能力注册表,所有 6 大类格式及 tier)+ inspect(per-file 判定 tier + 输出 data.manifest.json,reference_only 时停止 eda_analyzer.py 改读 reference)",
+        "eda_analyzer.py": "通用有界报告(只对 automated tier 有效):batched UTF-8 schema/profile + 缺失值/组/分裂审计 + describe + Markdown 报告 --max-rows 100000 --output data.eda.json",
+        "tabular_profile.py": "CSV/TSV schema/profile 专用:分列类型/缺失 token/范围 --missing-token NA",
+        "sequence_inspector.py": "FASTA/FASTQ Biopython 流式 record/base 前缀;aggregate lengths/alphabet/GC/Phred+33;不读 IDs/序列内容",
+        "image_inspector.py": "PNG/JPG Pillow 容器元数据 + TIFF/OME-TIFF tifffile page/series/shape/axes/dtype 元数据;不读像素/tags/OME-XML 值",
+        "missingness_leakage_audit.py": "缺失值与组/实体/分裂/时间泄漏审计 --group-column --entity-column --split-column --time-column",
+        "distribution_sensitivity.py": "分布/异常/变换敏感度扫描 --column measurement;均值/SD vs 中位数/IQR/MAD 对比,flag 不是删除规则",
+        "report_scaffold.py": "EDA Markdown 报告脚手架;6 段(标题元数据/基础信息/文件类型详情/数据分析/关键发现/建议) --input data.csv --output data.eda.md",
+        "tier_definitions": {
+          "automated_core": "有界 UTF-8 schema/profile + 缺失/组/分裂/分布/异常/变换敏感度;仅 CSV/TSV/JSON",
+          "automated_optional": "有界 shape/dtype/前缀/Phred/容器元数据;不读像素/序列内容/属性;NPY/NPZ/HDF5/FASTA/FASTQ/PNG/JPG/TIFF/OME-TIFF",
+          "reference_only": "读对应 references/*.md + 用单独 pin/验证的领域工具,或把派生副本转成 automated 格式;200+ 扩展名",
+          "unsupported": "Fail closed;要求先给格式规范+经审核加支持"
+        },
+        "format_category_routing": {
+          "通用科学格式": "references/general_scientific_formats.md — CSV/JSON/NumPy/HDF5 + pandas/Polars + EDA/statistical rigor",
+          "生信/基因组格式": "references/bioinformatics_genomics_formats.md — FASTA/FASTQ(自动化) + SAM/BAM/VCF/BED/GFF/BigWig/H5AD/Loom/MTX(reference-only)",
+          "显微镜/成像格式": "references/microscopy_imaging_formats.md — Pillow/TIFF/OME-TIFF(自动化) + vendor microscopy + DICOM/NIfTI/WSI(reference-only)",
+          "化学/分子格式": "references/chemistry_molecular_formats.md — Reference-only molecular/trajectory/QM routing;PDB/CIF/MOL/SDF/XYZ/SMILES/GRO/LOG/FCHK/CUBE/DCD/XTC/TRR/PRMTOP/PSF",
+          "光谱/分析化学格式": "references/spectroscopy_analytical_formats.md — Reference-only spectra/MS/vendor data;FID/mzML/mzXML/RAW/MGF/SPC/JDX/XY/CIF/WDF",
+          "蛋白质组/代谢组格式": "references/proteomics_metabolomics_formats.md — Reference-only PSI/omics + 定量表;mzML/pepXML/protXML/mzID/mzTab/SKY/MSP/H5AD/imzML"
+        }
+      },
+      "1.2 文件加载与转化": {
+        "_meta": "按 6 大类组织 200+ 扩展名 → 对应加载 skill/库;每条标注 tier (automated / reference-only) 和产出 (DataFrame / ndarray / 专用结构)",
+        "通用科学格式 (general_scientific_formats)": {
+          "automated": {
+            ".csv": "eda_analyzer.py + tabular_profile.py + pandas/Polars(UTF-8 矩形 schema/profile,缺失/分组/分裂审计)",
+            ".tsv": "eda_analyzer.py + tabular_profile.py + pandas/Polars(同 CSV,tab 分隔)",
+            ".json": "eda_analyzer.py(strict whole-document,duplicate keys 与 NaN/Infinity 拒绝,产出 dict)",
+            ".npy": "eda_analyzer.py + numpy(read-only mmap,shape/dtype + 有界 numeric sample,no object dtype/pickle)",
+            ".npz": "eda_analyzer.py + numpy(ZIP preflight + encryption/member/size/ratio + 一次一个数组)",
+            ".h5": "eda_analyzer.py + h5py(只读 hierarchy/dataset 元数据;不读 values/attributes/soft links/external storage/filter)",
+            ".hdf5": "eda_analyzer.py + h5py(同 .h5)"
+          },
+          "reference_only": {
+            ".parquet": "polars / pandas / pyarrow(列存 + 谓词下推)",
+            ".xlsx": "openpyxl / pandas(多 sheet + 公式)",
+            ".xls": "xlrd / pandas(legacy Excel)",
+            ".zarr": "zarr-python(分块压缩 N 维数组;本地/S3/GCS)",
+            ".nc": "xarray / netCDF4(NetCDF,带维/坐标/属性)",
+            ".mat": "scipy.io.loadmat(MATLAB v5/v7)",
+            ".fits": "astropy.io.fits(天文 FITS 表/HDU)",
+            ".xml": "lxml / ElementTree",
+            ".arrow": "pyarrow IPC",
+            ".feather": "pyarrow Feather(v2)",
+            ".jsonl": "pandas.read_json(lines=True) / polars.scan_ndjson",
+            ".ndjson": "同 .jsonl"
+          }
+        },
+        "生信/基因组格式 (bioinformatics_genomics_formats)": {
+          "automated": {
+            ".fasta": "sequence_inspector.py + Biopython(流式 record/base 前缀,aggregate lengths/alphabet/GC,no IDs/sequences)",
+            ".fa": "sequence_inspector.py + Biopython(同 .fasta)",
+            ".fna": "sequence_inspector.py + Biopython(核酸 FASTA)",
+            ".fastq": "sequence_inspector.py + Biopython(同 FASTA + Phred+33 aggregate screen,encoding 需确认)",
+            ".fq": "sequence_inspector.py + Biopython(同 .fastq)"
+          },
+          "reference_only": {
+            ".sam": "pysam(对齐读段文本)",
+            ".bam": "pysam(SAM 压缩二进制 + index)",
+            ".cram": "pysam(参考压缩)",
+            ".vcf": "pysam / cyvcf2(变异调用文本)",
+            ".bcf": "pysam / cyvcf2(VCF 压缩二进制)",
+            ".bed": "pybedtools / polars-bio(区间注释)",
+            ".gff": "gffutils / pygtftk(基因注释 v3)",
+            ".gtf": "gffutils / pygtftk(基因注释 v2)",
+            ".bigwig": "pyBigWig(连续信号轨道)",
+            ".bigbed": "pyBigWig(区间索引)",
+            ".h5ad": "anndata(单细胞 obs/var/obsm/layers) + scanpy",
+            ".loom": "anndata(Loom v3)",
+            ".mtx": "scanpy(10x 市场矩阵,搭配 barcodes.tsv + features.tsv)",
+            ".counts": "scanpy / pandas(基因 × 样本 counts 矩阵)",
+            ".2bit": "twobitreader(2bit 格式基因组)",
+            ".embl": "Biopython(EMBL flatfile)",
+            ".gb": "Biopython(GenBank flatfile)",
+            ".gff3": "gffutils(同 .gff)",
+            ".wig": "pyBigWig / deeptools(变长区间信号)"
+          }
+        },
+        "显微镜/成像格式 (microscopy_imaging_formats)": {
+          "automated": {
+            ".png": "image_inspector.py + Pillow(容器元数据,no 像素解码)",
+            ".jpg": "image_inspector.py + Pillow(同 PNG,JPEG)",
+            ".jpeg": "image_inspector.py + Pillow(同 .jpg)",
+            ".tif": "image_inspector.py + tifffile(page/series/shape/axes/dtype 元数据,no 像素/tags/OME-XML 值)",
+            ".tiff": "image_inspector.py + tifffile(同 .tif)",
+            ".ome.tif": "image_inspector.py + tifffile(OME-TIFF 元数据)",
+            ".ome.tiff": "image_inspector.py + tifffile(同 .ome.tif)"
+          },
+          "reference_only": {
+            ".nd2": "nd2reader / pims(Nikon NIS-Elements)",
+            ".lif": "readlif(Leica LAS AF)",
+            ".czi": "pylibczirw / aicspylibczi(Carl Zeiss)",
+            ".ims": "imaris / imarispy(Bitplane Imaris HDF5)",
+            ".dcm": "pydicom(DICOM 读/写/匿名化/窗位/3D 重建)",
+            ".nii": "nibabel(NIfTI 1,神经影像)",
+            ".nii.gz": "nibabel(NIfTI 1 压缩)",
+            ".mrc": "mrcfile(电子显微镜体数据)",
+            ".dm3": "hyperspy(Gatan 旧版)",
+            ".dm4": "hyperspy(Gatan 新版)",
+            ".vsi": "pyvsi / openslide(Olympus)",
+            ".svs": "openslide / histolab(Aperio WSI;组织检测 + tile 抽取)",
+            ".ndpi": "openslide / histolab(Hamamatsu WSI)",
+            ".mrxs": "openslide(3DHISTECH Mirax)",
+            ".scn": "openslide(Leica SCN)",
+            ".bif": "openslide(Ventana BIF)",
+            ".qptiff": "openslide(Phenochart)",
+            ".ome.xml": "ome-types(OME 元数据)",
+            ".bids": "pybids(神经影像 BIDS 标准,DICOM→BIDS + 查询)",
+            "_wsi_tile_extraction": "histolab / pathml(全幅病理切片 SVS/TIFF/NDPI 组织检测 + tile 抽取)"
+          }
+        },
+        "化学/分子格式 (chemistry_molecular_formats)": {
+          "reference_only": {
+            ".pdb": "Biopython PDBParser / mdtraj / prolif(蛋白结构,ATOM/HETATM)",
+            ".cif": "gemmi / pymatgen / Biopython(mmCIF,Crystallographic Information File)",
+            ".mol": "rdkit(MDL MOL 单分子)",
+            ".mol2": "rdkit / openbabel(Tripos MOL2 + 力场)",
+            ".sdf": "rdkit(MDL SDFile 多分子 + 属性)",
+            ".xyz": "ase / rdkit(笛卡尔坐标)",
+            ".smi": "rdkit(SMILES 列表)",
+            ".smiles": "rdkit(同 .smi)",
+            ".gro": "MDAnalysis / mdtraj(GROMACS 坐标 + 拓扑)",
+            ".log": "cclib(Gaussian / ORCA / Q-Chem 输出,SCF 收敛 + 振动)",
+            ".fchk": "cclib(Gaussian formatted checkpoint,波函数)",
+            ".cube": "cclib / ASE(Gaussian cube,轨道/密度体)",
+            ".dcd": "MDAnalysis / mdtraj(轨迹二进制,CHARMM/NAMD)",
+            ".xtc": "MDAnalysis / mdtraj(GROMACS 压缩轨迹)",
+            ".trr": "MDAnalysis / mdtraj(GROMACS 全精度轨迹)",
+            ".prmtop": "parmed / MDAnalysis(AMBER 拓扑 + 力场)",
+            ".psf": "MDAnalysis / mdtraj(CHARMM/NAMD 拓扑)",
+            ".mae": "schrodinger(Schrödinger Maestro,专有)",
+            ".molblock": "rdkit(内嵌 MOL 文本块)"
+          }
+        },
+        "光谱/分析化学格式 (spectroscopy_analytical_formats)": {
+          "reference_only": {
+            ".fid": "nmrglue(Bruker/Agilent/Varian 一维 NMR 原始)",
+            ".mzml": "pyteomics / pyopenms / matchms(HUPO-PSI 质谱 XML)",
+            ".mzxml": "pyteomics / pyopenms(老质谱 XML 格式)",
+            ".raw": "pyteomics(Thermo Fisher 专有,需 Thermo MsiFileReader/.NET)",
+            ".mgf": "matchms / pyteomics(MASCOT Generic Format 峰列表)",
+            ".spc": "scipy.io / spc-spectra(Galactic SPC,IR/UV-Vis)",
+            ".jdx": "jcamp(JCAMP-DX,IR/Raman/UV-Vis)",
+            ".dx": "jcamp(JCAMP-DX 扩展名变体)",
+            ".xy": "numpy / pandas.loadtxt(两列文本,FTIR/色谱)",
+            ".wdf": "renishawWiRE / scipy.io(Renishaw Raman 拉曼)",
+            ".brukertop": "nmrglue(Bruker TopSpin 目录)",
+            ".fticr": "nmrglue(Bruker FT-ICR 质谱)",
+            ".cdf": "netCDF4 / scipy.io(ANDI NetCDF 质谱/色谱)"
+          }
+        },
+        "蛋白质组/代谢组格式 (proteomics_metabolomics_formats)": {
+          "reference_only": {
+            ".mzml": "pyopenms / matchms(同光谱,LC-MS/MS 主格式)",
+            ".pepxml": "pyteomics(TPP 肽段鉴定)",
+            ".protxml": "pyteomics(TPP 蛋白鉴定汇总)",
+            ".mzid": "pyteomics(HUPO-PSI mzIdentML 鉴定 XML)",
+            ".mztab": "pyteomics(HUPO-PSI mzTab 鉴定 + 定量表)",
+            ".sky": "pyteomics(Skyline 文件,专有)",
+            ".sky.zip": "pyteomics(Skyline 共享文件)",
+            ".msp": "matchms(NIST MSP 谱库文本)",
+            ".h5ad": "anndata / scanpy(单细胞 + 代谢组 H5AD)",
+            ".imzml": "pyimzml(质谱成像 IBD + XML)",
+            ".ibd": "pyimzml(质谱成像二进制,搭配 .imzML)"
+          }
+        }
+      }
     }
   }
 }
