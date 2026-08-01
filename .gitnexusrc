@@ -1,0 +1,10 @@
+{
+  // Default branch used in the generated regression-compare example (base_ref).
+  // Use this so a project on `develop`/`master` doesn't get "main" rewritten
+  // over its fix on every analyze. (Alias: "branch".)
+  // "defaultBranch": "develop",
+  "skipContextFiles": true, // alias of skipAgentsMd: keep your own AGENTS.md/CLAUDE.md
+  "skipSkills": true, // don't install standard .claude/skills/gitnexus-* skills
+  "embeddings": true, // generate embeddings by default
+  // "workerTimeout": 60,
+}
