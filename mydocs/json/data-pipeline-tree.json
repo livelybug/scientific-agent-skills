@@ -3,8 +3,8 @@
   "summary": {
     "stage_count": 2,
     "sub_stage_count": 8,
-    "skill_count": 76,
-    "data_options_estimate": "393+"
+    "skill_count": 85,
+    "data_options_estimate": "397+"
   },
   "stage_0": {
     "name": "数据获取与接入 (Data Acquisition)",
@@ -58,8 +58,8 @@
     "name": "数据清洗与预处理 (Data Cleaning)",
     "summary": {
       "sub_stage_count": 4,
-      "skill_count": 39,
-      "data_options_estimate": "213+"
+      "skill_count": 48,
+      "data_options_estimate": "217+"
     },
     "sub_stage": {
       "1.1 文件格式识别": {
@@ -235,16 +235,23 @@
         }
       },
       "1.3 缺失值处理": {
-        "_meta": "数值/类别列缺失值检测 + 插补:5+ 策略(sklearn.impute 三大主流量 + pymc 贝叶斯 + 缺失值统计报告)",
-        "exploratory-data-analysis": "缺失值统计报告:eda_analyzer.py 产出 per-column missing_values 计数/比例,辅助 MCAR/MAR/MNAR 模式初步判定",
-        "scikit-learn": "sklearn.impute 三大主流插补器:(1) SimpleImputer — 均值/中位数/众数/常量填充 (2) KNNImputer — k 近邻加权插补(欧氏距离,默认 k=5) (3) IterativeImputer — 多变量迭代/MICE,可换 BayesianRidge/RandomForest 等估计器建模列间关系",
-        "pymc": "贝叶斯缺失数据处理:把缺失值作为模型参数联合采样 + 不确定性量化(HDI);适合 MCAR/MAR 假设且需要可信区间的科学场景"
+        "missing-value-report": "缺失值统计报告 — eda_analyzer.py 产出 per-column missing_values 计数/比例,辅助 MCAR/MAR/MNAR 模式初步判定 | exploratory-data-analysis",
+        "simple-imputer": "SimpleImputer — 均值/中位数/众数/常量填充 (strategy 参数) | scikit-learn",
+        "knn-imputer": "KNNImputer — k 近邻加权插补(欧氏距离,默认 k=5) | scikit-learn",
+        "iterative-imputer": "IterativeImputer — 多变量迭代/MICE,可换 BayesianRidge/RandomForest 等估计器建模列间关系 | scikit-learn",
+        "bayesian-imputation": "贝叶斯缺失数据插补 — 把缺失值作为模型参数联合采样 + 不确定性量化(HDI),适合 MCAR/MAR 假设且需要可信区间的科学场景 | pymc"
       },
       "1.4 异常值检测与处理": {
-        "_meta": "数值列异常值检测 + 处理:5+ 策略(IQR/Z-Score 经典统计 + Isolation Forest/One-class SVM 模型驱动 + Winsorization/删除/保留/robust methods 三选一 + RobustScaler 缩放 + 时序上下文检测)",
-        "statistical-analysis": "statistical-analysis 异常值检测 + 处理建议:scripts/assumption_checks.py:detect_outliers(data, name, method='iqr'/'zscore', threshold=1.5/3.0) 返回 lower_bound/upper_bound + outlier_indices + n_outliers + pct_outliers + interpretation;recommendation(line 401-405):(1) 移除 data entry error (2) Winsorizing (3) 保留 legitimate (4) 使用 robust methods",
-        "scikit-learn": "sklearn 异常值检测与缩放:(1) sklearn.preprocessing.RobustScaler — 中位数/IQR 缩放抗异常值(对应 robust methods 建议)(2) sklearn.ensemble.IsolationForest — 树基隔离异常(contamination 比例参数,无监督,高维友好)(3) sklearn.svm.OneClassSVM — 边界学习异常(RBF/linear 核,小中数据集)(4) scipy.stats.mstats.winsorize — 缩尾(limits 比例截断,可直接对异常值上限处理)",
-        "timesfm-forecasting": "上下文异常检测:examples/anomaly-detection/detect_anomalies.py:detect_context_anomalies(values, dates) 线性去趋势 + Z-score 残差阈值,产出 CRITICAL/WARNING/NORMAL 三级 severity + 残差 + 趋势;适合带趋势/周期的传感器/金融/工业监控时序数据"
+        "iqr-method": "IQR 方法 — 四分位距异常值检测 (threshold=1.5/3.0) | statistical-analysis",
+        "z-score-method": "Z-Score 方法 — 标准差异常值检测 (threshold=3.0) | statistical-analysis",
+        "winsorization": "Winsorization — 缩尾(替换极端值为分位数) | scipy",
+        "removing-data-entry-error": "Removing (删除) — 移除确认是 data entry error 的异常 | statistical-analysis",
+        "keeping-legitimate": "Keeping (保留) — 保留 legitimate 真实极端值 | statistical-analysis",
+        "robust-methods": "Robust Methods — 用 median/IQR/MAD 等代替 mean/SD | statistical-analysis",
+        "robust-scaler": "RobustScaler — 用中位数/IQR 替代均值/标准差缩放 | scikit-learn",
+        "isolation-forest": "Isolation Forest — 树基隔离异常 (contamination 参数) | scikit-learn",
+        "one-class-svm": "One-class SVM — 边界学习异常 (RBF/linear 核) | scikit-learn",
+        "timesfm-context-anomaly": "TimesFM 上下文异常检测 — 时序数据上下文异常 | timesfm-forecasting"
       }
     }
   }
