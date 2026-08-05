@@ -2,9 +2,9 @@
   "$schema": "./data-pipeline-tree.schema.json",
   "summary": {
     "stage_count": 2,
-    "sub_stage_count": 6,
-    "skill_count": 71,
-    "data_options_estimate": "380+"
+    "sub_stage_count": 7,
+    "skill_count": 73,
+    "data_options_estimate": "385+"
   },
   "stage_0": {
     "name": "数据获取与接入 (Data Acquisition)",
@@ -57,9 +57,9 @@
   "stage_1": {
     "name": "数据清洗与预处理 (Data Cleaning)",
     "summary": {
-      "sub_stage_count": 2,
-      "skill_count": 34,
-      "data_options_estimate": "200+"
+      "sub_stage_count": 3,
+      "skill_count": 36,
+      "data_options_estimate": "205+"
     },
     "sub_stage": {
       "1.1 文件格式识别": {
@@ -233,6 +233,12 @@
             ".ibd": "pyimzml(质谱成像二进制,搭配 .imzML)"
           }
         }
+      },
+      "1.3 缺失值处理": {
+        "_meta": "数值/类别列缺失值检测 + 插补:5+ 策略(sklearn.impute 三大主流量 + pymc 贝叶斯 + 缺失值统计报告)",
+        "exploratory-data-analysis": "缺失值统计报告:eda_analyzer.py 产出 per-column missing_values 计数/比例,辅助 MCAR/MAR/MNAR 模式初步判定",
+        "scikit-learn": "sklearn.impute 三大主流插补器:(1) SimpleImputer — 均值/中位数/众数/常量填充 (2) KNNImputer — k 近邻加权插补(欧氏距离,默认 k=5) (3) IterativeImputer — 多变量迭代/MICE,可换 BayesianRidge/RandomForest 等估计器建模列间关系",
+        "pymc": "贝叶斯缺失数据处理:把缺失值作为模型参数联合采样 + 不确定性量化(HDI);适合 MCAR/MAR 假设且需要可信区间的科学场景"
       }
     }
   }
