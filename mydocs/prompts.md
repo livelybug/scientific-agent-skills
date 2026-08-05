@@ -7,14 +7,20 @@
  
 @mydocs/data-pipeline-tree.md#58-68，  @mydocs/EDA-workflow-skill.md#32-117  ， @mydocs/完整数据分析工作流程-gitnexus-ds.md#12-19  ， @mydocs/完整数据分析工作流程02.md#36-44 
 
-要求（「方法清单型」子阶段 — 每个方法/工具作为独立 key）：
-- value 格式：`<方法名> — <简述> | <skill>`（方法名可中英混合，末尾用 `|` 注明 skill 归属）
+要求（「方法清单型」子阶段 — Skill 归属作为上一级 key,方法/工具作为下一级 key）：
+- 结构：`<skill>: { <option>: <description> }`（skill 作为父 key，option 作为子 key，value 只写方法简述，不带 `| skill`）
+- skill_count = 父 key 数；data_options_estimate = 子 key 总数
 
 value 格式示例：
 ```json
-"iqr-method": "IQR 方法 — 四分位距异常值检测 (threshold=1.5/3.0) | statistical-analysis",
-"winsorization": "Winsorization — 缩尾(替换极端值为分位数) | scipy",
-"isolation-forest": "Isolation Forest — 树基隔离异常 (contamination 参数) | scikit-learn"
+"statistical-analysis": {
+  "z-score-method": "Z-Score 方法 — 标准差异常值检测 (threshold=3.0)"
+},
+"scikit-learn": {
+  "robust-scaler": "RobustScaler — 用中位数/IQR 替代均值/标准差缩放",
+  "isolation-forest": "Isolation Forest — 树基隔离异常 (contamination 参数)",
+  "one-class-svm": "One-class SVM — 边界学习异常 (RBF/linear 核)"
+}
 ```
 
 最后同步更新Stage级别的Summary与顶层的Summary。
