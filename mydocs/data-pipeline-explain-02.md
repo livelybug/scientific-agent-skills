@@ -52,13 +52,7 @@ kind = "new-skills" if decision["verdict"] == "novel" else "composition-recipes"
 
 ---
 
-## 附录 A：何时不要用这条通用链路
-
-- **单点问题**：用户只问"画个分布图"或"跑个 t 检验"——直接调对应单 skill，不要拉全套。
-- **强领域**：用户明确说"做单细胞"、"做临床报告"、"做化合物筛选"——用 [`scvi-tools`](../skills/scvi-tools) / [`clinical-reports`](../skills/clinical-reports) / [`medchem`](../skills/medchem) 等领域 skill 替换通用阶段 4-7 的对应节点。
-- **生产级重跑**：如果同一份数据要反复跑、跨人协作、要求可审计——把 `end-to-end-analysis` 升级为 [`nextflow`](../skills/nextflow) / [`dnalnexus`](../skills/dnanexus-integration) / [`latchbio-integration`](../skills/latchbio-integration) 这类管道层 skill，由它们来调度上方 7 步。
-
-## 附录 B：如何让 agent 持续发现新链路
+## 附录 A：如何让 agent 持续发现新链路
 
 仓库自带的 [`autoskill`](../skills/autoskill) 会：
 1. 通过 [screenpipe](https://github.com/screenpipe/screenpipe) 记录你跑分析时实际打开的窗口、命令、文件；

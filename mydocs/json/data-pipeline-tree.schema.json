@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scientific Agent Skills — Data Pipeline Tree",
+  "description": "Schema for the data pipeline tree describing stages, sub-stages, skills, tier definitions, and per-extension file format handlers.",
+  "$comment": "Design notes: (1) Top-level summary and stage_X are required; additional stage_N keys are allowed via patternProperties. (2) sub_stage is heterogeneous: 0.x contains skill-only maps, 1.1 mixes skills with tier_definitions/format_category_routing, 1.2 groups skills under six format categories. The schema is medium-strict: known fixed fields (summary, name, _meta, tier_definitions, format_category_routing, automated, reference_only) are declared explicitly; dynamic keys (skill names, format categories, file extensions) are validated via patternProperties. (3) Skill pattern allows trailing .py (e.g. 'eda_analyzer.py'). (4) Extension map pattern allows leading dot + alphanumeric/dot/plus; a special '^_[a-z0-9_]+$' branch covers underscore-prefixed meta entries like '_wsi_tile_extraction'.",
+  "type": "object",
+  "required": ["summary", "stage_0", "stage_1"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "summary": { "$ref": "#/$defs/summary" }
+  },
+  "patternProperties": {
+    "^stage_\\d+$": { "$ref": "#/$defs/stage" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "summary": {
+      "type": "object",
+      "required": ["stage_count", "sub_stage_count", "skill_count", "data_options_estimate"],
+      "properties": {
+        "stage_count": { "type": "integer", "minimum": 0 },
+        "sub_stage_count": { "type": "integer", "minimum": 0 },
+        "skill_count": { "type": "integer", "minimum": 0 },
+        "data_options_estimate": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "stage": {
+      "type": "object",
+      "required": ["name", "summary", "sub_stage"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "$ref": "#/$defs/stage_summary" },
+        "sub_stage": { "$ref": "#/$defs/sub_stage_map" }
+      },
+      "additionalProperties": false
+    },
+    "stage_summary": {
+      "type": "object",
+      "required": ["sub_stage_count", "skill_count", "data_options_estimate"],
+      "properties": {
+        "sub_stage_count": { "type": "integer", "minimum": 0 },
+        "skill_count": { "type": "integer", "minimum": 0 },
+        "data_options_estimate": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "sub_stage_map": {
+      "type": "object",
+      "minProperties": 1,
+      "patternProperties": {
+        "^\\d+\\.\\d+ .+$": { "$ref": "#/$defs/sub_stage_content" }
+      },
+      "additionalProperties": false
+    },
+    "sub_stage_content": {
+      "type": "object",
+      "properties": {
+        "_meta": { "type": "string" }
+      },
+      "patternProperties": {
+        "^[a-z][a-z0-9_-]+(\\.[a-z]+)?$": {
+          "anyOf": [
+            { "type": "string" },
+            { "$ref": "#/$defs/string_to_string" }
+          ]
+        },
+        "^.+\\s\\([a-z_]+\\)$": {
+          "$ref": "#/$defs/format_category_block"
+        }
+      },
+      "additionalProperties": false
+    },
+    "format_category_block": {
+      "type": "object",
+      "properties": {
+        "automated": { "$ref": "#/$defs/extension_map" },
+        "reference_only": { "$ref": "#/$defs/extension_map" }
+      },
+      "additionalProperties": false
+    },
+    "extension_map": {
+      "type": "object",
+      "patternProperties": {
+        "^\\.[a-z0-9][a-z0-9.+]*$": { "type": "string" },
+        "^_[a-z0-9_]+$": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "string_to_string": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}

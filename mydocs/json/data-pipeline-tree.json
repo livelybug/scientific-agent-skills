@@ -1,4 +1,5 @@
 {
+  "$schema": "./data-pipeline-tree.schema.json",
   "summary": {
     "stage_count": 2,
     "sub_stage_count": 6,
