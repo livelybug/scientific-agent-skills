@@ -2,9 +2,9 @@
   "$schema": "./data-pipeline-tree.schema.json",
   "summary": {
     "stage_count": 2,
-    "sub_stage_count": 10,
-    "skill_count": 62,
-    "data_options_estimate": "329+"
+    "sub_stage_count": 11,
+    "skill_count": 76,
+    "data_options_estimate": "355+"
   },
   "stage_0": {
     "name": "数据获取与接入 (Data Acquisition)",
@@ -57,9 +57,9 @@
   "stage_1": {
     "name": "数据清洗与预处理 (Data Cleaning)",
     "summary": {
-      "sub_stage_count": 6,
-      "skill_count": 25,
-      "data_options_estimate": "149+"
+      "sub_stage_count": 7,
+      "skill_count": 39,
+      "data_options_estimate": "175+"
     },
     "sub_stage": {
       "1.1 文件格式识别": {
@@ -284,6 +284,63 @@
           "ordinal-encoder": "OrdinalEncoder — 有序类别整数映射 0..k-1(categories 显式指定顺序,默认按出现顺序)",
           "label-encoder": "LabelEncoder — 一维 y 标签整数映射(用于目标列,不直接用于特征矩阵,fit/transform 一致)",
           "target-encoder": "TargetEncoder — 类别替换为该类目标均值(贝叶斯收缩,适合高基数类别,需配合 K-fold 防泄漏)"
+        }
+      },
+      "1.7 领域专项预处理 (Domain-Specific Preprocessing)": {
+        "_meta": "按 4 类领域组织:单细胞 / RNA-seq / 质谱-分子 / 神经影像-全幅病理 / 神经电生理 / 基因组变异。skill 归属作为父 key,具体方法/工具作为子 key",
+        "scanpy": {
+          "per-cell-qc": "per-cell QC — n_genes_by_counts / total_counts / pct_counts_mt / pct_counts_ribo 过滤 (min_genes 200–500, pct_mt 5–20%)",
+          "per-gene-qc": "per-gene QC — n_cells_by_counts 过滤 (min_cells 3–10)",
+          "normalize-total": "normalize_total — 文库大小归一化 (target_sum=1e4)",
+          "log1p-transform": "log1p — 对数变换 log(X+1),稳定方差",
+          "highly-variable-genes": "highly_variable_genes — 高变基因选择 (n_top_genes=2000–3000, flavor=seurat/cell_ranger/seurat_v3)",
+          "combat-batch-correction": "ComBat 批次校正 — 经验贝叶斯去除已知批次效应 (scanpy.pp.combat)"
+        },
+        "pydeseq2": {
+          "size-factor-estimation": "size factor 估计 — median-of-ratios 中位数比率法归一化",
+          "variance-stabilizing-transform": "方差稳定变换 (VST) — 让异方差 count 数据近似同方差",
+          "deseq2-normalization": "DESeq2 归一化 — 离散度估计 + 负二项 GLM 差异表达"
+        },
+        "scvi-tools": {
+          "scvi-scanvi-batch-correction": "scVI / scANVI 深度学习批次校正 — 变分自编码器隐空间 + 条件批次/标签"
+        },
+        "neuropixels-analysis": {
+          "preprocess-recording": "preprocess_recording — SpikeInterface 预处理 (带通/陷波滤波 + common median reference + 坏通道标记)"
+        },
+        "datamol": {
+          "standardize-mol": "standardize_mol — 分子标准化 (规范化结构 + 去盐 + 互变异构体统一)",
+          "sanitize-mol": "sanitize — 校验分子结构 + valence/芳香性/连接性修复"
+        },
+        "matchms": {
+          "spectrum-similarity": "谱图相似性匹配 — Cosine / ModifiedCosine 谱-谱打分 (mz_power / intensity_power 参数)",
+          "spectrum-filters": "40+ 滤波器 — normalize_intensities / require_min_matching_peaks / add_parent_mass 等"
+        },
+        "pyopenms": {
+          "lc-ms-ms-processing": "LC-MS/MS 处理 — 峰 picking (FeatureFinderMetabo) + 特征对齐 (MapAligner)",
+          "search-engine": "搜库 — Comet / Mascot / MSGF+ 肽段/代谢物鉴定"
+        },
+        "pysam": {
+          "alignment-io": "SAM/BAM/CRAM/VCF/FASTA/FASTQ 读写 + 索引 (.bai/.csi/.tbi)",
+          "pileup": "pileup — 区域/位点统计 (count, base, insert/delete size)"
+        },
+        "bids": {
+          "dicom-to-bids": "DICOM→BIDS — HeuDiConv / dcm2niix / dcm2bids / BIDScoin 转换",
+          "pybids-query": "PyBIDS 查询 — BIDS 数据集 layout 检索 (subjects/sessions/datatype/suffix)"
+        },
+        "pydicom": {
+          "dicom-read-write": "DICOM 读/写/匿名化/窗位/3D 重建 (Dataset / pixel_array / anonymize)"
+        },
+        "histolab": {
+          "wsi-tissue-detection-tile": "WSI 全幅病理 (SVS/TIFF/NDPI) 组织检测 + tile 抽取"
+        },
+        "pathml": {
+          "multiplex-spatial-schema": "多路复用图谱 / 空间图谱 schema 校验 (validate_graph / validate_multiplex)"
+        },
+        "flowio": {
+          "fcs-to-dataframe": "流式 FCS 文件 (2.0/3.0/3.1) → DataFrame — 通道/补偿/门控元数据 + 事件矩阵"
+        },
+        "tiledbvcf": {
+          "vcf-lake-region-query": "高性能 VCF 湖 — 增量样本添加 + 本地/云端 (S3/Azure/GCS) 并行区域查询 + 子集导出"
         }
       }
     }
