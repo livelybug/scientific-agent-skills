@@ -2,9 +2,9 @@
   "$schema": "./data-pipeline-tree.schema.json",
   "summary": {
     "stage_count": 2,
-    "sub_stage_count": 8,
-    "skill_count": 61,
-    "data_options_estimate": "318+"
+    "sub_stage_count": 9,
+    "skill_count": 62,
+    "data_options_estimate": "325+"
   },
   "stage_0": {
     "name": "数据获取与接入 (Data Acquisition)",
@@ -57,9 +57,9 @@
   "stage_1": {
     "name": "数据清洗与预处理 (Data Cleaning)",
     "summary": {
-      "sub_stage_count": 4,
-      "skill_count": 24,
-      "data_options_estimate": "138+"
+      "sub_stage_count": 5,
+      "skill_count": 25,
+      "data_options_estimate": "145+"
     },
     "sub_stage": {
       "1.1 文件格式识别": {
@@ -265,6 +265,17 @@
         },
         "timesfm-forecasting": {
           "timesfm-context-anomaly": "TimesFM 上下文异常检测 — 时序数据上下文异常"
+        }
+      },
+      "1.5 数据标准化/归一化 (Feature Scaling)": {
+        "scikit-learn": {
+          "standard-scaler": "StandardScaler — z = (x-μ)/σ 零均值单位方差缩放,适用于 SVM/KNN/神经网络/PCA/正则化线性模型",
+          "minmax-scaler": "MinMaxScaler — 线性变换到 [0,1] 或自定义范围,适用于需边界值或非正态分布数据",
+          "robust-scaler": "RobustScaler — 用中位数/IQR 缩放,对异常值稳健",
+          "maxabs-scaler": "MaxAbsScaler — 按最大绝对值缩放到 [-1,1],保留稀疏结构,适用于稀疏/已中心化数据",
+          "normalizer": "Normalizer — 样本级 L1/L2/max 范数归一化,适用于文本特征或余弦相似度",
+          "quantile-transformer": "QuantileTransformer — 分位数映射到均匀/正态分布,降低异常值影响",
+          "power-transformer": "PowerTransformer — Box-Cox/Yeo-Johnson 幂变换,使数据更接近正态分布"
         }
       }
     }

@@ -1,6 +1,3 @@
-* 能用子agent就尽量用子agent.
-* 在任何时候，有任何不明白，先用用 gitnexus mcp的 pure-k-dense-skill 索引查询， 还是不明白再用 AskUserQuestion tool 提问，直到完全明白才能继续。
-
 * @mydocs/data-pipeline-tree.md#43  现在要做这个阶段。
 
 这一阶段的子阶段是文件格式识别，文件加载与转化。以下是相关的资料，有点乱，请根据 @mydocs/json/data-pipeline-tree.schema.json#38-94 整理成json 插入 @mydocs/data-pipeline-tree.json#92: 
@@ -26,6 +23,9 @@ value 格式示例：
 最后同步更新Stage级别的Summary与顶层的Summary。
 
 ---
+
+* 能用子agent就尽量用子agent.
+* 在任何时候，有任何不明白，先用用 gitnexus mcp的 pure-k-dense-skill 索引查询， 还是不明白再用 AskUserQuestion tool 提问，直到完全明白才能继续。
 
 ### 通用模板（替换占位符后即可复用）
 
