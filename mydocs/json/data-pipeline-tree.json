@@ -2,9 +2,9 @@
   "$schema": "./data-pipeline-tree.schema.json",
   "summary": {
     "stage_count": 2,
-    "sub_stage_count": 11,
-    "skill_count": 76,
-    "data_options_estimate": "355+"
+    "sub_stage_count": 12,
+    "skill_count": 84,
+    "data_options_estimate": "421+"
   },
   "stage_0": {
     "name": "数据获取与接入 (Data Acquisition)",
@@ -57,9 +57,9 @@
   "stage_1": {
     "name": "数据清洗与预处理 (Data Cleaning)",
     "summary": {
-      "sub_stage_count": 7,
-      "skill_count": 39,
-      "data_options_estimate": "175+"
+      "sub_stage_count": 8,
+      "skill_count": 47,
+      "data_options_estimate": "241+"
     },
     "sub_stage": {
       "1.1 文件格式识别": {
@@ -341,6 +341,107 @@
         },
         "tiledbvcf": {
           "vcf-lake-region-query": "高性能 VCF 湖 — 增量样本添加 + 本地/云端 (S3/Azure/GCS) 并行区域查询 + 子集导出"
+        }
+      },
+      "1.8 数据验证与质量控制 (Data Validation & Quality Control)": {
+        "_meta": "按 4 类组织: 方法学级验证 (ICH/USP/ISO) / 通用跨域 QC / 组学 & 实验数据 QC / 元数据 & 报告 QC。skill → option 嵌套;脚本默认只报告不修改;exit-code 可作 CI gate;复用 1.1–1.7 已存在的 skill 时只补充本阶段新增的 option (避免重复计数)",
+        "analytical-method-validation": {
+          "plan-validation": "plan_validation — 选 ICH Q2(R2)/Q14 / USP <1220>/<1225>/<1226> / ICH M10 / CLSI EP / ISO/IEC 17025 框架生成 study layout + 协议",
+          "check-response": "check_response — 校准模型 (线性/非线性/加权) 在整个范围内是否成立,Q2(R2) §3.2.2 response",
+          "check-accuracy-precision": "check_accuracy_precision — 回收率 / 重复性 / 中间精密度 / 批内批间方差分解",
+          "check-detection-limits": "check_detection_limits — LOD/LOQ 信噪比法 + 标准差外推法 + 斜率法;与报告阈值对齐",
+          "check-bioanalytical-run": "check_bioanalytical_run — ICH M10 单次 run 接受准则 (calibrator tolerance / QC accuracy / ISR 复算)",
+          "compare-methods": "compare_methods — 方法转移/等效性: Deming + Passing–Bablok + Bland–Altman + TOST 等效检验"
+        },
+        "iso-standards-readiness": {
+          "validate-scope-intake": "validate_scope_intake — 范围声明 (scope intake) 结构 / 必填字段 / 命名一致性",
+          "validate-evidence-manifest": "validate_evidence_manifest — evidence manifest 的 JSON Schema 校验 + 引用闭合 + 未解析项标 blocker",
+          "audit-document-records": "audit_document_records — 受控文件/记录版本/日期/审批链 (controlled_item + Review.date)",
+          "check-capa": "check_capa — CAPA 闭环 (纠正/预防) 要素齐备性 + 有效性证据",
+          "check-supplier-controls": "check_supplier_controls — 外部供方: 评价 / 监视 / 再评价记录",
+          "check-traceability": "check_traceability — 计量学溯源链: 参考物质 → 测量程序 → 结果",
+          "check-qmsr-transition": "check_qmsr_transition — FDA QMSR (2026-02-02 生效) 迁移检查",
+          "gap-analyzer": "gap_analyzer — 框架 → 必需要素 → 现有证据三段差距分析,输出 blocker 列表"
+        },
+        "exploratory-data-analysis": {
+          "comprehensive-qc-pipeline": "comprehensive_qc_pipeline — 把 schema/profile + missingness_leakage_audit + distribution_sensitivity 串成一条命令,只报告不修改",
+          "safe-io-bounded-validation": "safe_io_bounded — 64 MiB 默认/512 MiB 硬顶;拒绝 URL/管道/symlink/.. / outside-root;tokenized identifier (--reveal-identifiers 仅暴露 basenames)"
+        },
+        "scikit-learn": {
+          "pipeline-leak-guard": "pipeline_leak_guard — Pipeline/ColumnTransformer 缩放/编码仅在训练集 fit;Fit on Training Data Only + Stratified Splitting + random_state 固定",
+          "stratified-split": "stratified_split — StratifiedKFold / train_test_split(stratify=y) 分层切分(保持类别比例,QC 阶段必做)",
+          "cross-val-qc": "cross_val_qc — cross_val_score 交叉验证作 QC 评估(k=5/10 报告 mean ± SD,提前发现不稳定模型)",
+          "random-state-reproducibility": "random_state_reproducibility — 全部 random_state= 固定(可复现 + CI 可比较);Set Random State for Reproducibility",
+          "convergence-diagnostics": "convergence_diagnostics — 迭代算法 (SGD/MLP/SVM) 收敛与性能诊断(n_iter_/tol/max_iter 显式)"
+        },
+        "statistical-analysis": {
+          "comprehensive-assumption-check": "comprehensive_assumption_check — 一次性串联正态/方差/线性/异常/回归诊断,失败自动给 remedial test",
+          "bayesian-qc-diagnostics": "bayesian_qc — PyMC + ArviZ 贝叶斯 QC 替代: az.summary(..., ci_prob=0.95) 95% HDI 诊断",
+          "check-normality": "check_normality — Shapiro-Wilk / D'Agostino / Anderson-Darling 单组正态性 (1.8 粒度;1.4 iqr-method 之外的分布前提)",
+          "check-normality-per-group": "check_normality_per_group — 按组正态性 (t-test / ANOVA 前提,组内样本量足时优先)",
+          "check-homogeneity-variance": "check_homogeneity_of_variance — Levene 方差齐性 + box plot 诊断(决定走参数 vs Welch vs 非参)",
+          "check-linearity": "check_linearity — 线性度检验(回归前提;失败 → 多项式 / 变换 / GAM)",
+          "detect-outliers": "detect_outliers — IQR / MAD / Grubbs 异常值检测 (assumption_checks.py 内;比 1.4 iqr-method 更广义:含 Grubbs 单异常检验)",
+          "check-regression-diagnostics": "check_regression_diagnostics — 残差正态/同方差/多重共线性(VIF)/自相关(DW) + 4-panel 诊断图"
+        },
+        "bulk-rnaseq": {
+          "validate-samplesheet": "validate_samplesheet — RNA-seq 样本表 (FASTQ 路径/strandedness/library layout/replicate 关系) 列与引用闭合",
+          "fastqc-multiqc-gate": "fastqc_multiqc_gate — 原始 read QC + MultiQC 报告作预 QC gate (决定是否进入 STAR/Salmon 量化)",
+          "trimming-qc": "trimming_qc — fastp / Trim Galore 修剪后 (长度/质量/接头残留) 再 QC",
+          "mapping-qc": "mapping_qc — STAR / Salmon 映射率 / 重复率 / rRNA 含量 / 复杂度检查",
+          "post-quant-qc": "post_quant_qc — 计数后 PCA + 样本距离热图作 post-quant 诊断图"
+        },
+        "scanpy": {
+          "qc-pipeline-run": "qc_pipeline — run_pipeline 加载后立即做 per-cell/per-gene QC + Scrublet 双胞检测 + make_qc_plots 前后对比"
+        },
+        "deeptools": {
+          "validate-files": "validate_files — BAM/bigWig/BED 存在性 + index (.bai/.csi) + 格式正确性校验",
+          "plot-fingerprint": "plotFingerprint — ChIP-seq 富集 + 样本一致性 fingerprint",
+          "plot-correlation": "plotCorrelation — 多样本 bigWig 相关性矩阵",
+          "plot-pca": "plotPCA — bigWig 样本 PCA",
+          "plot-coverage": "plotCoverage — 覆盖度均一化 + 标准化",
+          "bam-coverage": "bamCoverage — BAM → bigWig 归一化 (用于下游相关性/PCA)",
+          "bam-compare": "bamCompare — BAM vs BAM/输入对照归一化 (用于 ChIP-seq 输入减法/对数比)",
+          "compute-matrix": "computeMatrix — 参考点/区域 (TSS/peak) 上下游信号矩阵 (scale-regions / reference-point)",
+          "plot-heatmap": "plotHeatmap — 矩阵 → 信号热图 (转录起始点/peak 中心信号分布)",
+          "plot-profile": "plotProfile — 矩阵 → 元基因图谱 (mean profile ± CI)"
+        },
+        "bids": {
+          "bids-validator": "bids_validator — bids-validator-deno 校验 BIDS 规范 + JSON sidecar 必填字段 + .bidsignore 配置",
+          "bids-schema-sync": "bids_schema_sync — update_schema.py 同步 BIDS schema 与版本 (保证校验器/数据集版本一致)",
+          "bids-converters": "bids_converters — HeuDiConv / dcm2niix / dcm2bids / BIDScoin DICOM→BIDS 转换器套件",
+          "mriqc-fmriprep-qc": "mriqc_fmriprep_qc — MRIQC / fMRIPrep 衍生品 (image + confounds) QC,BIDS-Apps 自动产出 dataset_description.json + 衍生品"
+        },
+        "pathml": {
+          "image-qc": "image_qc — HESlide tile + TissueDetectionHE 掩膜 + 亮度/对比度/焦点图像级 QC",
+          "spatial-schema-validate": "validate_spatial_schema — validate_graph / validate_multiplex 多路复用图谱/空间图谱 schema 校验",
+          "slide-manifest": "slide_manifest — WSI 清单生成与字段闭合 (slide + 衍生 tile 元数据)",
+          "plan-pipeline": "plan_pipeline — pipeline 模块组合 (BoxBlur + TissueDetectionHE) + 参数计划",
+          "plan-inference": "plan_inference — 推理计划: 图块 → 模型 → 输出 schema + 资源预算"
+        },
+        "lamindb": {
+          "artifact-validation": "artifact_validation — Bionty 本体注释 + 严格 schema 校验 + FAIR 合规;@ln.flow 血缘跟踪;下游每阶段的 schema 校验入口"
+        },
+        "neurokit2": {
+          "inspect-signal": "inspect_signal — 信号数据契约 (采样率/单位/极性/缺口/饱和) + OnlineStats 流式统计 + CSV 探查",
+          "eda-pipeline": "eda_pipeline — EDA 流水线统计 (_finite_values / _stats) + 信号在线统计",
+          "ecg-hrv-pipeline": "ecg_hrv_pipeline — ECG/HRV 流水线: epoch 化 + 时域/频域/非线性特征 (25+ 熵类型)",
+          "validate-multimodal": "validate_multimodal — 多模态 manifest 校验 (对齐/采样率/通道命名一致性)",
+          "plan-epochs": "plan_epochs — epoch 计划: 基于事件 + 切片长度"
+        },
+        "flowio": {
+          "fcs-metadata-validate": "fcs_metadata_validate — FCS 2.0/3.0/3.1 元数据/门控/补偿解析 + 文件级校验"
+        },
+        "markitdown": {
+          "markitdown-convert": "markitdown_convert — PDF/Office/图像/音频 → Markdown 的格式/编码校验;Azure Document Intelligence 增强 PDF 表格抽取"
+        },
+        "openpiv": {
+          "openpiv-qc": "openpiv_qc — 粒子图像测速 (PIV) 图像对预处理 + 互相关 + 矢量场后处理异常矢量过滤"
+        },
+        "shap": {
+          "shap-distribution-drift": "shap_drift — 训练/测试 SHAP 值分布漂移检测 (识别 train↔test covariate shift 与数据问题)",
+          "shap-feature-dependence": "shap_dependence — SHAP 特征依赖图 (识别非线性/交互/异常分布,提示数据问题与变换候选)",
+          "shap-value-distribution": "shap_value_distribution — SHAP 值 beeswarm/bar 全局分布 (识别离群点贡献 + 异常高影响样本)"
         }
       }
     }
