@@ -25,11 +25,10 @@ SUB_STAGE_KEY_RE = re.compile(r"^(\d+)\.(\d+)\s")
 SUB_STAGE_LINE_RE = re.compile(r'^\s*"(\d+)\.(\d+)\s+([^"]+)":\s*\{')
 
 # Prompt template (mirrors mydocs/prompt/prompts.md "通用模板")
-PROMPT_TEMPLATE = """* @mydocs/json/data-pipeline-tree.json#L{insert_line}  现在要做这个子阶段。
-
-* 这一阶段的子阶段是 `{sub_stage_key}`（请从下方源文件中提取这个子阶段的内容）。
+PROMPT_TEMPLATE = """* 现在要做这个子阶段`{sub_stage_key}`。
 以下是相关的资料，有点乱，请根据  @mydocs/json/data-pipeline-tree.schema.json#L38-94  整理成json ， 插入 @mydocs/json/data-pipeline-tree.json#L{insert_line} :
 
+相关的资料：
 * {file_refs}
 
 要求（「方法清单型」子阶段 — Skill 归属作为上一级 key,方法/工具作为下一级 key）：
@@ -49,6 +48,12 @@ value 格式示例：
 ```
 
 最后同步更新 Stage 级别 Summary 与顶层 Summary（`sub_stage_count` / `skill_count` / `data_options_estimate`）。
+
+---
+
+* 能用子agent就尽量用子agent.
+* 在任何时候，有任何不明白，先用用 gitnexus mcp的 pure-k-dense-skill 索引查询， 还是不明白再用 AskUserQuestion tool 提问，直到完全明白才能继续。
+
 """
 
 

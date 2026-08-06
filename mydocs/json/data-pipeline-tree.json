@@ -2,9 +2,9 @@
   "$schema": "./data-pipeline-tree.schema.json",
   "summary": {
     "stage_count": 2,
-    "sub_stage_count": 9,
+    "sub_stage_count": 10,
     "skill_count": 62,
-    "data_options_estimate": "325+"
+    "data_options_estimate": "329+"
   },
   "stage_0": {
     "name": "数据获取与接入 (Data Acquisition)",
@@ -57,9 +57,9 @@
   "stage_1": {
     "name": "数据清洗与预处理 (Data Cleaning)",
     "summary": {
-      "sub_stage_count": 5,
+      "sub_stage_count": 6,
       "skill_count": 25,
-      "data_options_estimate": "145+"
+      "data_options_estimate": "149+"
     },
     "sub_stage": {
       "1.1 文件格式识别": {
@@ -276,6 +276,14 @@
           "normalizer": "Normalizer — 样本级 L1/L2/max 范数归一化,适用于文本特征或余弦相似度",
           "quantile-transformer": "QuantileTransformer — 分位数映射到均匀/正态分布,降低异常值影响",
           "power-transformer": "PowerTransformer — Box-Cox/Yeo-Johnson 幂变换,使数据更接近正态分布"
+        }
+      },
+      "1.6 类别变量编码 (Categorical Encoding)": {
+        "scikit-learn": {
+          "one-hot-encoder": "OneHotEncoder — 名义类别 N 维二值化(handle_unknown='ignore', drop='first' 避免共线),适合树/线性模型",
+          "ordinal-encoder": "OrdinalEncoder — 有序类别整数映射 0..k-1(categories 显式指定顺序,默认按出现顺序)",
+          "label-encoder": "LabelEncoder — 一维 y 标签整数映射(用于目标列,不直接用于特征矩阵,fit/transform 一致)",
+          "target-encoder": "TargetEncoder — 类别替换为该类目标均值(贝叶斯收缩,适合高基数类别,需配合 K-fold 防泄漏)"
         }
       }
     }

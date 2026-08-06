@@ -38,3 +38,6 @@ value 格式示例：
 
 - 最后同步更新 Stage 级别 Summary 与顶层 Summary（`sub_stage_count` / `skill_count` / `data_options_estimate`）
 
+---
+
+python3 mydocs/prompt/generate_substage_prompt.py "1.5 数据标准化/归一化 (Feature Scaling)"
