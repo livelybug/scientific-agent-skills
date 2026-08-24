@@ -1,0 +1,305 @@
+= Scientific Agent Skills — 安装勾选清单
+%interactive
+:toc:
+:toclevels: 2
+:icons: font
+:experimental:
+:source-highlighter: rouge
+
+// 说明：
+// - 顶部 "跨学科（CROSS）" 组 = 默认勾选（推荐安装，74 项）
+// - 底部 "学科专属（DOMAIN）" 组 = 默认不勾选（按需勾选，75 项）
+// - 在渲染端（IBM Docs / Antora 兼容浏览器）勾选框可点击
+// - 每项的 `<skill-name>` 是 scientific-agent-skills/skills/<skill-name>/ 目录名
+// - 安装命令：`gh skill install K-Dense-AI/scientific-agent-skills <skill-name>`（项目级写入 .agents/skills/）
+// - 目标路径：/home/burt/p2/src/AI/data-analyse/income-data-analyse/.agents/skills/
+
+== 总览
+
+* 总计 149 个 skill（README 写 148 是因为 `onekgpd` 缺 SKILL.md）
+* 跨学科（CROSS，推荐）— 74 项，默认 ✅
+* 学科专属（DOMAIN，按需）— 75 项，默认 ☐
+* 划分标准：技能主要用途是否绑定某一具体学科
+
+'''
+
+== ✅ 跨学科（CROSS）— 74 项，默认勾选
+
+=== 📊 数据处理与可视化（13）
+[%interactive]
+* [ ] `dask` — 分布式/外存 pandas、NumPy 工作流
+* [x] `polars` — 高性能 DataFrame，惰性求值
+* [x] `vaex` — 数十亿行 out-of-core
+* [x] `zarr-python` — 分块 N-D 数组，云存储
+* [x] `networkx` — 图/网络算法
+* [x] `matplotlib` — 底层绘图
+* [x] `seaborn` — 统计可视化
+* [x] `scientific-visualization` — 出版级多面板图
+* [x] `liteparse` — 本地 PDF/Office 解析（带 bbox/OCR）
+* [x] `markitdown` — 任意文档 → Markdown
+* [x] `pdf` — PDF 创建/编辑/合并/拆分
+* [ ] `docx` — Word 读写
+* [ ] `pptx` — PowerPoint 读写
+* [x] `xlsx` — Excel 读写/公式/格式化
+
+=== 🔬 统计与实验设计（4）
+[%interactive]
+* [x] `exploratory-data-analysis` — 200+ 格式 EDA（对应 idea.md 主阶段 2）
+* [x] `statistical-analysis` — 引导式统计推断
+* [x] `statistical-power` — 样本量与功效
+* [x] `experimental-design` — 实验设计（随机/区组/因子/重复）
+
+=== 🤖 ML / AI / 统计建模（13）
+[%interactive]
+* [x] `scikit-learn` — 经典 ML
+* [x] `scikit-survival` — 生存分析
+* [x] `shap` — 模型可解释性
+* [x] `umap-learn` — 非线性降维
+* [x] `statsmodels` — 统计模型/计量经济
+* [ ] `pytorch-lightning` — 深度学习训练框架
+* [ ] `transformers` — HuggingFace 模型
+* [ ] `torch-geometric` — 图神经网络
+* [ ] `stable-baselines3` — RL 算法
+* [ ] `pufferlib` — 高性能 RL
+* [x] `aeon` — 时序 ML
+* [x] `timesfm-forecasting` — 零样本时序预测
+* [x] `pymc` — 贝叶斯建模
+* [x] `pymoo` — 多目标优化
+
+=== ⚙️ 通用计算 / 仿真（3）
+[%interactive]
+* [x] `matlab` — MATLAB/Octave 数值计算
+* [x] `simpy` — 离散事件仿真
+* [x] `sympy` — 符号数学
+
+=== 📚 科学写作与沟通（22）
+[%interactive]
+* [ ] `scientific-writing` — 科学论文写作
+* [ ] `scientific-slides` — 学术幻灯片
+* [ ] `scientific-schematics` — 出版级示意图
+* [x] `scientific-brainstorming` — 研究头脑风暴
+* [x] `scientific-critical-thinking` — 科学批判性思维
+* [x] `peer-review` — 同行评审
+* [ ] `scholar-evaluation` — ScholarEval 框架
+* [ ] `venue-templates` — 期刊/会议模板
+* [ ] `research-grants` — 基金申请书（NSF/NIH/DOE/DARPA/NSTC）
+* [ ] `market-research-reports` — 咨询风格市场报告
+* [ ] `literature-review` — 系统文献综述
+* [x] `paper-lookup` — 10 个学术库检索
+* [x] `paperzilla` — 论文对话
+* [x] `bgpt-paper-search` — 全文结构化抽取
+* [x] `exa-search` — 学术/技术 Web 搜索
+* [x] `parallel-web` — Web 搜索/抽取/监控
+* [x] `research-lookup` — 多源学术证据汇总
+* [ ] `pyzotero` — Zotero 库管理
+* [ ] `citation-management` — 引用管理
+* [ ] `open-notebook` — 自托管 NotebookLM 替代
+* [x] `latex-posters` — LaTeX 学术海报
+* [x] `pptx-posters` — PPTX 海报
+* [x] `infographics` — AI 信息图
+* [x] `generate-image` — 通用 AI 图像生成
+* [x] `markdown-mermaid-writing` — Markdown + Mermaid 文档标准
+* [x] `what-if-oracle` — 4–6 分支情景分析
+* [x] `consciousness-council` — 多视角审议
+* [ ] `dhdna-profiler` — 文本思维特征分析
+* [ ] `hypothesis-generation` — 结构化假设生成
+* [ ] `hugging-science` — 跨 17 学科 HF 资源目录
+* [x] `arbor` — 通用 artifact 优化（假设树）
+* [x] `hypogenic` — 表格数据自动假设生成
+
+=== 🗄️ 数据访问（2）
+[%interactive]
+* [x] `database-lookup` — 78+ 公共数据库统一访问
+* [x] `nextflow` — 通用工作流引擎
+
+=== 🏗️ 基础设施（5）
+[%interactive]
+* [ ] `modal` — 无服务器云算
+* [ ] `optimize-for-gpu` — CUDA 加速
+* [ ] `pi-agent` — Pi 终端 agent 平台
+* [x] `get-available-resources` — 计算资源检测
+* [x] `autoskill` — 重复工作流挖掘 → skill 草稿
+
+'''
+
+== ☐ 学科专属（DOMAIN）— 75 项，按需勾选
+
+=== 🧬 生信/基因组（23）
+[%interactive]
+* [ ] `bulk-rnaseq` — 端到端 bulk RNA-seq 编排
+* [ ] `biopython` — 分子生物工具包
+* [ ] `bioservices` — 40+ 生信服务统一接口
+* [ ] `cellxgene-census` — CZ CELLxGENE 单细胞库
+* [ ] `deeptools` — NGS BAM→bigWig、QC、热图
+* [ ] `etetoolkit` — 系统发育树工具包
+* [ ] `gget` — 20+ 生信数据库快速查询
+* [ ] `geniml` — 基因组区间 ML
+* [ ] `gtars` — 高性能区间分析
+* [ ] `polars-bio` — Polars 基因组区间扩展
+* [ ] `pysam` — SAM/BAM/CRAM/VCF 读写
+* [ ] `pydeseq2` — bulk RNA-seq 差异表达
+* [ ] `scanpy` — 单细胞 RNA-seq
+* [ ] `scikit-bio` — 生物数据分析
+* [ ] `scvelo` — RNA 速率
+* [ ] `scvi-tools` — 单细胞深度生成模型
+* [ ] `tiledbvcf` — 规模化 VCF 存储/检索
+* [ ] `anndata` — 单细胞数据结构
+* [ ] `phylogenetics` — MAFFT/IQ-TREE/FastTree 系统发育
+* [ ] `arboreto` — 基因调控网络推断
+* [ ] `pathway-enrichment` — 通路/基因集富集
+* [ ] `flowio` — FCS 流式细胞术文件
+* [ ] `onekgpd` — 1000G 突变频率
+
+=== 🧪 化学/药物（11）
+[%interactive]
+* [ ] `adaptyv` — Adaptyv Bio 蛋白实验平台
+* [ ] `datamol` — RDKit Pythonic 封装
+* [ ] `deepchem` — 分子 ML
+* [ ] `diffdock` — 分子对接
+* [ ] `medchem` — 药物相似性过滤
+* [ ] `molecular-dynamics` — OpenMM + MDAnalysis MD 模拟
+* [ ] `molfeat` — 100+ 分子特征化器
+* [ ] `pytdc` — 治疗数据共享平台
+* [ ] `rdkit` — 化学信息学
+* [ ] `rowan` — Rowan 云化学
+* [ ] `tamarind` — Tamarind 蛋白设计/结构平台
+
+=== 🔬 蛋白组学（2）
+[%interactive]
+* [ ] `matchms` — 质谱相似性
+* [ ] `pyopenms` — 质谱分析平台
+
+=== 🏥 临床/精准医疗（8）
+[%interactive]
+* [ ] `clinical-decision-support` — 临床决策支持文档
+* [ ] `clinical-reports` — 临床报告
+* [ ] `depmap` — 癌症依赖图谱
+* [ ] `imaging-data-commons` — NCI 影像数据共享
+* [ ] `neurokit2` — 生理信号处理
+* [ ] `primekg` — 精准医学知识图谱
+* [ ] `pyhealth` — 临床深度学习流水线
+* [ ] `treatment-plans` — 治疗方案
+
+=== 🖼️ 医学影像/数字病理（3）
+[%interactive]
+* [ ] `histolab` — WSI 瓦片提取
+* [ ] `pathml` — 计算病理
+* [ ] `pydicom` — DICOM 读写
+
+=== 🧠 神经科学（2）
+[%interactive]
+* [ ] `bids` — BIDS 神经数据标准
+* [ ] `neuropixels-analysis` — Neuropixels 神经记录
+
+=== 🔮 材料/化学/物理（7）
+[%interactive]
+* [ ] `astropy` — 天文学
+* [ ] `cirq` — Google 量子计算
+* [ ] `cobrapy` — 约束代谢建模
+* [ ] `pennylane` — 量子 ML
+* [ ] `pymatgen` — 材料科学
+* [ ] `qiskit` — IBM 量子计算
+* [ ] `qutip` — 量子物理仿真
+
+=== ⚙️ 工程仿真（1）
+[%interactive]
+* [ ] `fluidsim` — 计算流体动力学
+
+=== 🌍 地理空间（2）
+[%interactive]
+* [ ] `geopandas` — 地理空间矢量数据
+* [ ] `geomaster` — 遥感/GIS/空间 ML
+
+=== 🧪 实验室自动化（8）
+[%interactive]
+* [ ] `benchling-integration` — Benchling ELN
+* [ ] `ginkgo-cloud-lab` — Ginkgo 云实验室
+* [ ] `labarchive-integration` — LabArchives ELN
+* [ ] `latchbio-integration` — Latch 生信流水线
+* [ ] `omero-integration` — OMERO 显微数据
+* [ ] `opentrons-integration` — Opentrons 液体处理
+* [ ] `protocolsio-integration` — protocols.io
+* [ ] `pylabrobot` — 厂商无关液体处理
+
+=== 🔬 多组学/系统生物学（1）
+[%interactive]
+* [ ] `lamindb` — 生物数据湖仓
+
+=== 🧬 蛋白工程（2）
+[%interactive]
+* [ ] `esm` — ESM 蛋白语言模型
+* [ ] `glycoengineering` — 糖基化工程
+
+=== 💊 分子机器学习（1）
+[%interactive]
+* [ ] `torchdrug` — 分子图深度学习
+
+=== 🧬 生信平台（2）
+[%interactive]
+* [ ] `dnanexus-integration` — DNAnexus 云生信
+* [ ] `pacsomatic` — nf-core/pacsomatic 肿瘤-正常体细胞变异
+
+=== 💰 财政数据（1）
+[%interactive]
+* [ ] `usfiscaldata` — 美国财政部数据
+
+=== ⚖️ 法规（1）
+[%interactive]
+* [ ] `iso-13485-certification` — 医疗器械 ISO 13485 认证
+
+'''
+
+== 边界说明（可推翻）
+
+[cols="1,3,2", options="header"]
+|===
+| Skill | 我的判断 | 理由 | 可改为
+
+| `zarr-python` | ✅ CROSS
+| 通用 N-D 数组，云存储
+| DOMAIN（如果仅在生信用）
+
+| `matlab`/`simpy`/`sympy` | ✅ CROSS
+| 通用数值/符号
+| 不变
+
+| `hypogenic` | ✅ CROSS
+| 假设生成方法通用
+| 不变
+
+| `hugging-science` | ✅ CROSS
+| 跨学科资源目录
+| 不变
+
+| `geopandas`/`geomaster` | ❌ DOMAIN
+| 地理空间是独立学科
+| CROSS（如果项目涉及 GIS）
+
+| `database-lookup` | ✅ CROSS
+| 78 库跨学科
+| 不变
+
+| `iso-13485-certification` | ❌ DOMAIN
+| 医疗器械法规
+| 不变
+|===
+
+'''
+
+== 安装命令参考
+
+[source,bash]
+----
+# 项目级安装到 /home/burt/p2/src/AI/data-analyse/income-data-analyse/.agents/skills/
+gh skill install K-Dense-AI/scientific-agent-skills <skill-name> --agent claude-code
+
+# 一次安装多个示例
+for s in dask polars matplotlib exploratory-data-analysis scientific-writing; do
+  gh skill install K-Dense-AI/scientific-agent-skills "$s" --agent claude-code
+done
+
+# 替代方案：git clone 后手动 cp
+git clone https://github.com/K-Dense-AI/scientific-agent-skills.git /tmp/sas
+mkdir -p /home/burt/p2/src/AI/data-analyse/income-data-analyse/.agents/skills
+cp -r /tmp/sas/skills/<skill-name> /home/burt/p2/src/AI/data-analyse/income-data-analyse/.agents/skills/
+----
