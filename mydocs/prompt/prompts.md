@@ -41,3 +41,15 @@ value 格式示例：
 ---
 
 python3 mydocs/prompt/generate_substage_prompt.py "1.5 数据标准化/归一化 (Feature Scaling)"
+
+
+---
+
+# 安装所选的skill
+
+* 安装位置:	/home/burt/p2/src/AI/data-analyse/income-data-analyse/.agents/skills/
+
+* 要再加 DOMAIN 类（如某个生信/化学 skill）或去掉某些用不上的，直接编辑 skill-selection-checklist.adoc 后重跑：
+```bash
+bash /home/burt/p2/src/AI/data-analyse/auto-data-analyse/scientific-agent-skills/mydocs/install-selected.sh
+```
